@@ -336,15 +336,15 @@ int main() {
             std::cout<<"The game is tie"<<"\n";
         }
         
-        
-        
-        
-        
         game_num++;
         
-        
-        
     }
+    
+    if(you.get_money()<=0)
+        std::cout<<"You have lost all the money.\n";
+    
+    else
+        std::cout<<"You have beaten the game!\n";
     
     
     return 0;
