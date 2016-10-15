@@ -62,14 +62,18 @@ class Hand {
    public:
       // A vector of Cards
       Hand();
-
-      // You decide what functions you'll need...
     void add_card(Card a);
+    double get_val();
+    string get_spanish_rank(int n) const;
+    string get_spanish_suit(int n) const;
+    string get_english_suit(int n) const;
+    string get_english_rank(int n) const;
+    size_t get_size();
+    int get_rank(int n);
     
    private:
     vector <Card> han;
-      // You decide what fields you'll need...
-};
+      };
 
 
 class Player {
@@ -77,8 +81,9 @@ class Player {
       // Constructor. 
       //    Assigns initial amount of money
       Player(int m);
-    int get_money(){return money;}
-      // You decide what functions you'll need...
+    int get_money();
+    void add_money(int n);
+    void lose_money(int n);
 
    private:
       int money;

@@ -235,11 +235,19 @@ string Hand::get_english_rank(int n) const{
 int Hand::get_rank(int n){
     return han[n].get_rank();
 }
+size_t Hand::get_size(){
+    return han.size();
+}
+
+
 /* *************************************************
  Player class
  ************************************************* */
 Player::Player(int m){
     money = m;
+}
+int Player::get_money(){
+    return money;
 }
 void Player::add_money(int n){
     money+=n;
