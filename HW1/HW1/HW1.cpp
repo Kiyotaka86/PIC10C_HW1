@@ -217,9 +217,19 @@ Player::Player(int m){
 
 
 int main() {
+    int bet=0;
+    Player you(100);
+    
+    
+     int game_num=1;
+    do{
+        std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
+        std::cin>>bet;
+    }while(bet > you.get_money() || bet<0);
     
     
     
     
+    return 0;
     
 }

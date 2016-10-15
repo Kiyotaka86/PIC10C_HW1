@@ -77,7 +77,7 @@ class Player {
       // Constructor. 
       //    Assigns initial amount of money
       Player(int m);
-
+    int get_money(){return money;}
       // You decide what functions you'll need...
 
    private:
