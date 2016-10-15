@@ -251,47 +251,64 @@ int main() {
     Hand your_h, d_hand;
     
     int game_num=1;
-    char extra='r';
     
-    do{
-        std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
-        std::cin>>bet;
-    }while(bet > you.get_money() || bet < 0);
+//Player's turn
     
+    while(you.get_money()>0 || you.get_money()<=900){
     
-    Card your_card;
-    your_h.add_card(your_card);
-    
-    do{
-        std::cout<<"Your cards:" << std::endl;
-        for(int i=0; i< your_h.get_size(); ++i){
-            std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
-        }
-    
-        std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
-        std::cin>>extra;
-        if (extra =='y'||extra=='Y'){
-            Card ncard;
-            your_h.add_card(ncard);
-            std::cout<<"New Card:\n";
-            std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
-        }
-        if (your_h.get_val()>7.5){
-            std::cout<<"Your total is"<< your_h.get_val();
-            break;
+        char extra='r';
+
+        do{
+            std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
+            std::cin>>bet;
+        }while(bet > you.get_money() || bet < 0);
+
+
+        Card your_card;
+        your_h.add_card(your_card);
+
+        do{
+            std::cout<<"Your cards:" << std::endl;
+            for(int i=0; i< your_h.get_size(); ++i){
+                std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+            }
+
+            std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
+            std::cin>>extra;
+            
+            if (extra =='y'||extra=='Y'){
+                Card ncard;
+                your_h.add_card(ncard);
+                std::cout<<"New Card:\n";
+                std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
+            }
+            
+            if (your_h.get_val()>7.5){
+                std::cout<<"Your total is"<< your_h.get_val();
+                break;
+            }
+            
+        }while(extra != 'n'&&extra != 'N');
+
+//the dealer's turn
+        
+        do{
+            Card d_card;
+            d_hand.add_card(d_card);
+        }while(d_hand.get_val()<5.5);
+               
+        std::cout<<"Dealer's cards" << std::endl;
+        for(int i=0; i< d_hand.get_size(); ++i){
+            std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
         }
         
-    }while(extra != 'n'&&extra != 'N');
-    
-    
-    Card d_card;
-    d_hand.add_card(d_card);
-    std::cout<<"Dealer's cards" << std::endl;
-    for(int i=0; i< d_hand.get_size(); ++i){
-        std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+        std::cout<<"Dealer's total is " << d_hand.get_val() <<std::endl;
+        
+        
+        
+        game_num++;
+        
     }
-    
-    
     return 0;
     
 }
