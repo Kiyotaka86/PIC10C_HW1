@@ -118,13 +118,63 @@ string Card::get_spanish_rank() const {
 // Accessor: returns a string with the suit of the card in English
 // This is just a stub! Modify it to your liking.
 string Card::get_english_suit() const {
-    return "";
+        string suitName;
+        switch (suit) {
+            case OROS:
+                suitName = "golds";
+                break;
+            case COPAS:
+                suitName = "cups";
+                break;
+            case ESPADAS:
+                suitName = "swords";
+                break;
+            case BASTOS:
+                suitName = "clubs";
+                break;
+            default: break;
+        }
+        return suitName;
 }
 
 // Accessor: returns a string with the rank of the card in English
-// This is just a stub! Modify it to your liking.
 string Card::get_english_rank() const {
-    return "";
+    string rankName;
+    switch (rank) {
+        case AS:
+            rankName = "Ace";
+            break;
+        case DOS:
+            rankName = "Two";
+            break;
+        case TRES:
+            rankName = "Three";
+            break;
+        case CUATRO:
+            rankName = "Four";
+            break;
+        case CINCO:
+            rankName = "Five";
+            break;
+        case SEIS:
+            rankName = "Six";
+            break;
+        case SIETE:
+            rankName = "Seven";
+            break;
+        case SOTA:
+            rankName = "Ten";
+            break;
+        case CABALLO:
+            rankName = "Eleven";
+            break;
+        case REY:
+            rankName = "Twelve";
+            break;
+        default: break;
+    }
+    return rankName;
+
 }
 
 
@@ -146,18 +196,30 @@ bool Card::operator < (Card card2) const {
 /* *************************************************
  Hand class
  ************************************************* */
-// Implemente the member functions of the Hand class here.
+Hand::Hand(){
+    vector<Card> han;
+    
+}
 
+void Hand::add_card(Card a){
+    han.push_back(a);
+}
 
 
 /* *************************************************
  Player class
  ************************************************* */
-// Implemente the member functions of the Player class here.
-
+Player::Player(int m){
+    money = m;
+}
 
 
 
 
 int main() {
+    
+    
+    
+    
+    
 }

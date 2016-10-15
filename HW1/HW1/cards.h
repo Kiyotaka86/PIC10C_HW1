@@ -64,8 +64,10 @@ class Hand {
       Hand();
 
       // You decide what functions you'll need...
-
+    void add_card(Card a);
+    
    private:
+    vector <Card> han;
       // You decide what fields you'll need...
 };
 
