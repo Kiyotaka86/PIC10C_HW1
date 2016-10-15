@@ -121,13 +121,13 @@ string Card::get_english_suit() const {
         string suitName;
         switch (suit) {
             case OROS:
-                suitName = "golds";
+                suitName = "coins";
                 break;
             case COPAS:
                 suitName = "cups";
                 break;
             case ESPADAS:
-                suitName = "swords";
+                suitName = "spades";
                 break;
             case BASTOS:
                 suitName = "clubs";
@@ -163,13 +163,13 @@ string Card::get_english_rank() const {
             rankName = "Seven";
             break;
         case SOTA:
-            rankName = "Ten";
+            rankName = "Jack";
             break;
         case CABALLO:
-            rankName = "Eleven";
+            rankName = "Knight";
             break;
         case REY:
-            rankName = "Twelve";
+            rankName = "King";
             break;
         default: break;
     }
@@ -205,21 +205,148 @@ void Hand::add_card(Card a){
     han.push_back(a);
 }
 
+double Hand::get_val(){
+    double val;
+    for(auto i:han){
+        if(i.get_rank()<=7)
+            val+=i.get_rank();
+        else
+            val+=0.5;
+    }
+        
+    
+        return val;
+}
 
+string Hand::get_spanish_rank(int n) const{
+    return  han[n].get_spanish_rank();
+}
+
+string Hand::get_spanish_suit(int n) const{
+    return han[n].get_spanish_suit();
+}
+
+string Hand::get_english_suit(int n) const{
+    return han[n].get_english_suit();
+}
+string Hand::get_english_rank(int n) const{
+    return han[n].get_english_rank();
+}
+int Hand::get_rank(int n){
+    return han[n].get_rank();
+}
 /* *************************************************
  Player class
  ************************************************* */
 Player::Player(int m){
     money = m;
 }
+void Player::add_money(int n){
+    money+=n;
+}
+void Player::lose_money(int n){
+    money-=n;
+}
 
 
 
 
 int main() {
+    int bet=0;
+    Player you(100);
+   
+    int game_num=1;
+    
+//Player's turn
+    
+    while(you.get_money()>0 && you.get_money()<=900){
+    
+        char extra='r';
+
+        Hand your_h, d_hand;
+        double yval, dval;
+        
+        do{
+            std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
+            std::cin>>bet;
+        }while(bet > you.get_money() || bet < 0);
+
+
+        Card your_card;
+        your_h.add_card(your_card);
+
+        do{
+            std::cout<<"Your cards:" << std::endl;
+            for(int i=0; i< your_h.get_size(); ++i){
+                std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+            }
+
+            std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
+            std::cin>>extra;
+            
+            if (extra =='y'||extra=='Y'){
+                Card ncard;
+                your_h.add_card(ncard);
+                std::cout<<"New Card:\n";
+                std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
+            }
+            
+            if (your_h.get_val()>7.5){
+                std::cout<<"Your total is"<< your_h.get_val() <<"\n";
+                break;
+            }
+            
+        }while(extra != 'n'&&extra != 'N');
+
+        yval = your_h.get_val();
+        
+//the dealer's turn
+        
+        do{
+            Card d_card;
+            d_hand.add_card(d_card);
+        }while(d_hand.get_val()<5.5);
+               
+        std::cout<<"Dealer's cards" << std::endl;
+        for(int i=0; i< d_hand.get_size(); ++i){
+            std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+        }
+        
+        std::cout<<"Dealer's total is " << d_hand.get_val() <<std::endl;
+        
+        dval = d_hand.get_val();
+        
+        if(yval>7.5){
+            std::cout<<"You lose "<< bet<<"\n";
+            you.lose_money(bet);
+        }
+        else if(yval<=7.5 && dval>7.5){
+            std::cout<<"You win "<< bet<<"\n";
+            you.add_money(bet);
+        }
+        else if(yval<=7.5 && dval<yval){
+            std::cout<<"You win "<< bet<<"\n";
+            you.add_money(bet);
+        }
+        else if(yval<=7.5 && dval<=7.5 && dval>yval){
+            std::cout<<"You lose "<< bet<<"\n";
+            you.lose_money(bet);
+        }
+        else if(yval<=7.5 && dval == yval){
+            std::cout<<"The game is tie"<<"\n";
+        }
+        
+        game_num++;
+        
+    }
+    
+    if(you.get_money()<=0)
+        std::cout<<"You have lost all the money.\n";
+    
+    else
+        std::cout<<"You have beaten the game!\n";
     
     
-    
-    
+    return 0;
     
 }
