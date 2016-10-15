@@ -121,13 +121,13 @@ string Card::get_english_suit() const {
         string suitName;
         switch (suit) {
             case OROS:
-                suitName = "golds";
+                suitName = "coins";
                 break;
             case COPAS:
                 suitName = "cups";
                 break;
             case ESPADAS:
-                suitName = "swords";
+                suitName = "spades";
                 break;
             case BASTOS:
                 suitName = "clubs";
@@ -163,13 +163,13 @@ string Card::get_english_rank() const {
             rankName = "Seven";
             break;
         case SOTA:
-            rankName = "Ten";
+            rankName = "Jack";
             break;
         case CABALLO:
-            rankName = "Eleven";
+            rankName = "Knight";
             break;
         case REY:
-            rankName = "Twelve";
+            rankName = "King";
             break;
         default: break;
     }
@@ -205,7 +205,36 @@ void Hand::add_card(Card a){
     han.push_back(a);
 }
 
+double Hand::get_val(){
+    double val;
+    for(auto i:han){
+        if(i.get_rank()<=7)
+            val+=i.get_rank();
+        else
+            val+=0.5;
+    }
+        
+    
+        return val;
+}
 
+string Hand::get_spanish_rank(int n) const{
+    return  han[n].get_spanish_rank();
+}
+
+string Hand::get_spanish_suit(int n) const{
+    return han[n].get_spanish_suit();
+}
+
+string Hand::get_english_suit(int n) const{
+    return han[n].get_english_suit();
+}
+string Hand::get_english_rank(int n) const{
+    return han[n].get_english_rank();
+}
+int Hand::get_rank(int n){
+    return han[n].get_rank();
+}
 /* *************************************************
  Player class
  ************************************************* */
@@ -219,15 +248,48 @@ Player::Player(int m){
 int main() {
     int bet=0;
     Player you(100);
+    Hand your_h, d_hand;
     
+    int game_num=1;
+    char extra='r';
     
-     int game_num=1;
     do{
         std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
         std::cin>>bet;
-    }while(bet > you.get_money() || bet<0);
+    }while(bet > you.get_money() || bet < 0);
     
     
+    Card your_card;
+    your_h.add_card(your_card);
+    
+    do{
+        std::cout<<"Your cards:" << std::endl;
+        for(int i=0; i< your_h.get_size(); ++i){
+            std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+        }
+    
+        std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
+        std::cin>>extra;
+        if (extra =='y'||extra=='Y'){
+            Card ncard;
+            your_h.add_card(ncard);
+            std::cout<<"New Card:\n";
+            std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
+        }
+        if (your_h.get_val()>7.5){
+            std::cout<<"Your total is"<< your_h.get_val();
+            break;
+        }
+        
+    }while(extra != 'n'&&extra != 'N');
+    
+    
+    Card d_card;
+    d_hand.add_card(d_card);
+    std::cout<<"Dealer's cards" << std::endl;
+    for(int i=0; i< d_hand.get_size(); ++i){
+        std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+    }
     
     
     return 0;
