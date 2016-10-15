@@ -241,6 +241,12 @@ int Hand::get_rank(int n){
 Player::Player(int m){
     money = m;
 }
+void Player::add_money(int n){
+    money+=n;
+}
+void Player::lose_money(int n){
+    money-=n;
+}
 
 
 
@@ -248,16 +254,18 @@ Player::Player(int m){
 int main() {
     int bet=0;
     Player you(100);
-    Hand your_h, d_hand;
-    
+   
     int game_num=1;
     
 //Player's turn
     
-    while(you.get_money()>0 || you.get_money()<=900){
+    while(you.get_money()>0 && you.get_money()<=900){
     
         char extra='r';
 
+        Hand your_h, d_hand;
+        double yval, dval;
+        
         do{
             std::cout<<"You have $" <<you.get_money() <<". Enter bet ";
             std::cin>>bet;
@@ -284,12 +292,14 @@ int main() {
             }
             
             if (your_h.get_val()>7.5){
-                std::cout<<"Your total is"<< your_h.get_val();
+                std::cout<<"Your total is"<< your_h.get_val() <<"\n";
                 break;
             }
             
         }while(extra != 'n'&&extra != 'N');
 
+        yval = your_h.get_val();
+        
 //the dealer's turn
         
         do{
@@ -304,11 +314,39 @@ int main() {
         
         std::cout<<"Dealer's total is " << d_hand.get_val() <<std::endl;
         
+        dval = d_hand.get_val();
+        
+        if(yval>7.5){
+            std::cout<<"You lose "<< bet<<"\n";
+            you.lose_money(bet);
+        }
+        else if(yval<=7.5 && dval>7.5){
+            std::cout<<"You win "<< bet<<"\n";
+            you.add_money(bet);
+        }
+        else if(yval<=7.5 && dval<yval){
+            std::cout<<"You win "<< bet<<"\n";
+            you.add_money(bet);
+        }
+        else if(yval<=7.5 && dval<=7.5 && dval>yval){
+            std::cout<<"You lose "<< bet<<"\n";
+            you.lose_money(bet);
+        }
+        else if(yval<=7.5 && dval == yval){
+            std::cout<<"The game is tie"<<"\n";
+        }
+        
+        
+        
         
         
         game_num++;
         
+        
+        
     }
+    
+    
     return 0;
     
 }
