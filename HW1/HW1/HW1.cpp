@@ -325,6 +325,27 @@ int main() {
         
         dval = d_hand.get_val();
         
+//Printing out starts
+        
+        fout<<"-----------------------------------------------\n\n";
+        fout<<"Game number: " <<game_num <<setw(15) << "Money left: $" <<you.get_money()<<std::endl
+        <<"Bet: " <<bet<< "\n\n";
+        
+        fout<<"Your cards:" << std::endl;
+        for(int i=0; i< your_h.get_size(); ++i){
+            fout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+        }
+        fout<<"Your total is " << your_h.get_val() <<"\n\n";
+        
+        fout<<"Dealer's cards" << std::endl;
+        for(int i=0; i< d_hand.get_size(); ++i){
+            fout<<setw(10)<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+        }
+        
+        fout<<"Dealer's total is " << d_hand.get_val() <<"\n\n";
+    
+//reflect the result of the game
+        
         if(yval>7.5){
             std::cout<<"You lose "<< bet<<"\n";
             you.lose_money(bet);
@@ -345,20 +366,9 @@ int main() {
             std::cout<<"The game is tie"<<"\n";
         }
         
-//Printing starts
-        
-        fout<<"-----------------------------------------------\n\n";
-        fout<<"Game number: " <<game_num <<setw(15) << "Money left: $" <<you.get_money()<<std::endl
-        <<"Bet: " <<bet<< std::endl;
-        
-        fout<<"Your cards:" << std::endl;
-        for(int i=0; i< your_h.get_size(); ++i){
-            fout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
-        }
-        
-        
-        
     }
+    
+//results of the entire games
     
     if(you.get_money()<=0)
         std::cout<<"You have lost all the money.\n";
@@ -368,6 +378,8 @@ int main() {
     
     fout<<"-----------------------------------------------\n";
     fout.close();
+    
+    
     
     return 0;
     
