@@ -72,7 +72,7 @@ class Hand {
     int get_rank(int n);
     
    private:
-    vector <Card> han;
+    std::vector <Card> han;
       };
 
 

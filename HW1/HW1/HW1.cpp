@@ -197,7 +197,7 @@ bool Card::operator < (Card card2) const {
  Hand class
  ************************************************* */
 Hand::Hand(){
-    vector<Card> han;
+    std::vector<Card> han;
     
 }
 
@@ -206,16 +206,14 @@ void Hand::add_card(Card a){
 }
 
 double Hand::get_val(){
-    double val;
+    double val=0;
     for(auto i:han){
         if(i.get_rank()<=7)
             val+=i.get_rank();
         else
             val+=0.5;
     }
-        
-    
-        return val;
+    return val;
 }
 
 string Hand::get_spanish_rank(int n) const{
@@ -332,7 +330,7 @@ int main() {
             std::cout<<"You win "<< bet<<"\n";
             you.add_money(bet);
         }
-        else if(yval<=7.5 && dval<yval){
+        else if(yval<=7.5 && dval<=7.5 && dval<yval){
             std::cout<<"You win "<< bet<<"\n";
             you.add_money(bet);
         }
@@ -340,7 +338,7 @@ int main() {
             std::cout<<"You lose "<< bet<<"\n";
             you.lose_money(bet);
         }
-        else if(yval<=7.5 && dval == yval){
+        else if(yval<=7.5 && dval<=7.5 && dval == yval){
             std::cout<<"The game is tie"<<"\n";
         }
         
