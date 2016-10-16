@@ -255,18 +255,34 @@ void Player::lose_money(int n){
 }
 
 
+void printgame(ofstream &fout){
+    
+
+    fout<<"-----------------------------------------------\n";
+    
+    
+    
+    
+    
+    
+}
+
 
 
 int main() {
     int bet=0;
     Player you(100);
    
-    int game_num=1;
+    int game_num=0;
+    
+    ofstream fout;
+    fout.open("gamelog.txt");
     
 //Player's turn
     
     while(you.get_money()>0 && you.get_money()<=900){
-    
+        
+        game_num++;
         char extra='r';
 
         Hand your_h, d_hand;
@@ -342,7 +358,8 @@ int main() {
             std::cout<<"The game is tie"<<"\n";
         }
         
-        game_num++;
+        printgame(fout);
+        
         
     }
     
@@ -352,6 +369,8 @@ int main() {
     else
         std::cout<<"You have beaten the game!\n";
     
+    fout<<game_num;
+    fout.close();
     
     return 0;
     
