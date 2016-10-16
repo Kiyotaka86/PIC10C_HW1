@@ -284,7 +284,7 @@ int main() {
         do{
             std::cout<<"Your cards:" << std::endl;
             for(int i=0; i< your_h.get_size(); ++i){
-                std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+                std::cout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
             }
 
             std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
@@ -294,7 +294,7 @@ int main() {
                 Card ncard;
                 your_h.add_card(ncard);
                 std::cout<<"New Card:\n";
-                std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
+                std::cout<<setw(10)<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
             }
             
             if (your_h.get_val()>7.5){
@@ -315,7 +315,7 @@ int main() {
                
         std::cout<<"Dealer's cards" << std::endl;
         for(int i=0; i< d_hand.get_size(); ++i){
-            std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+            std::cout<<setw(10)<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
         }
         
         std::cout<<"Dealer's total is " << d_hand.get_val() <<std::endl;
