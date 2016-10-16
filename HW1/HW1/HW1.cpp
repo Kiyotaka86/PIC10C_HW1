@@ -197,7 +197,7 @@ bool Card::operator < (Card card2) const {
  Hand class
  ************************************************* */
 Hand::Hand(){
-    vector<Card> han;
+    std::vector<Card> han;
     
 }
 
@@ -206,16 +206,14 @@ void Hand::add_card(Card a){
 }
 
 double Hand::get_val(){
-    double val;
+    double val=0;
     for(auto i:han){
         if(i.get_rank()<=7)
             val+=i.get_rank();
         else
             val+=0.5;
     }
-        
-    
-        return val;
+    return val;
 }
 
 string Hand::get_spanish_rank(int n) const{
@@ -258,17 +256,20 @@ void Player::lose_money(int n){
 
 
 
-
 int main() {
     int bet=0;
     Player you(100);
    
-    int game_num=1;
+    int game_num=0;
+    
+    std::ofstream fout;
+    fout.open("gamelog.txt");
     
 //Player's turn
     
     while(you.get_money()>0 && you.get_money()<=900){
-    
+        
+        game_num++;
         char extra='r';
 
         Hand your_h, d_hand;
@@ -286,7 +287,7 @@ int main() {
         do{
             std::cout<<"Your cards:" << std::endl;
             for(int i=0; i< your_h.get_size(); ++i){
-                std::cout<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+                std::cout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
             }
 
             std::cout<<"Your total is " << your_h.get_val() <<". Do you want another card (y/n)?" <<std::endl;
@@ -296,7 +297,7 @@ int main() {
                 Card ncard;
                 your_h.add_card(ncard);
                 std::cout<<"New Card:\n";
-                std::cout<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
+                std::cout<<setw(10)<< ncard.get_spanish_rank() <<" de " <<ncard.get_spanish_suit()<< "  (" << ncard.get_english_rank()<<" of " << ncard.get_english_suit() <<")\n";
             }
             
             if (your_h.get_val()>7.5){
@@ -317,12 +318,33 @@ int main() {
                
         std::cout<<"Dealer's cards" << std::endl;
         for(int i=0; i< d_hand.get_size(); ++i){
-            std::cout<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+            std::cout<<setw(10)<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
         }
         
         std::cout<<"Dealer's total is " << d_hand.get_val() <<std::endl;
         
         dval = d_hand.get_val();
+        
+//Printing out starts
+        
+        fout<<"-----------------------------------------------\n\n";
+        fout<<"Game number: " <<game_num <<setw(15) << "Money left: $" <<you.get_money()<<std::endl
+        <<"Bet: " <<bet<< "\n\n";
+        
+        fout<<"Your cards:" << std::endl;
+        for(int i=0; i< your_h.get_size(); ++i){
+            fout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+        }
+        fout<<"Your total is " << your_h.get_val() <<"\n\n";
+        
+        fout<<"Dealer's cards" << std::endl;
+        for(int i=0; i< d_hand.get_size(); ++i){
+            fout<<setw(10)<<d_hand.get_spanish_rank(i) <<" de " <<d_hand.get_spanish_suit(i)<< "  (" << d_hand.get_english_rank(i) <<" of " << d_hand.get_english_suit(i) <<")\n";
+        }
+        
+        fout<<"Dealer's total is " << d_hand.get_val() <<"\n\n";
+    
+//reflect the result of the game
         
         if(yval>7.5){
             std::cout<<"You lose "<< bet<<"\n";
@@ -332,7 +354,7 @@ int main() {
             std::cout<<"You win "<< bet<<"\n";
             you.add_money(bet);
         }
-        else if(yval<=7.5 && dval<yval){
+        else if(yval<=7.5 && dval<=7.5 && dval<yval){
             std::cout<<"You win "<< bet<<"\n";
             you.add_money(bet);
         }
@@ -340,19 +362,23 @@ int main() {
             std::cout<<"You lose "<< bet<<"\n";
             you.lose_money(bet);
         }
-        else if(yval<=7.5 && dval == yval){
+        else if(yval<=7.5 && dval<=7.5 && dval == yval){
             std::cout<<"The game is tie"<<"\n";
         }
         
-        game_num++;
-        
     }
+    
+//results of the entire games
     
     if(you.get_money()<=0)
         std::cout<<"You have lost all the money.\n";
     
     else
         std::cout<<"You have beaten the game!\n";
+    
+    fout<<"-----------------------------------------------\n";
+    fout.close();
+    
     
     
     return 0;
