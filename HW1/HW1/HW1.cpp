@@ -255,19 +255,6 @@ void Player::lose_money(int n){
 }
 
 
-void printgame(ofstream &fout){
-    
-
-    fout<<"-----------------------------------------------\n";
-    
-    
-    
-    
-    
-    
-}
-
-
 
 int main() {
     int bet=0;
@@ -275,7 +262,7 @@ int main() {
    
     int game_num=0;
     
-    ofstream fout;
+    std::ofstream fout;
     fout.open("gamelog.txt");
     
 //Player's turn
@@ -358,7 +345,17 @@ int main() {
             std::cout<<"The game is tie"<<"\n";
         }
         
-        printgame(fout);
+//Printing starts
+        
+        fout<<"-----------------------------------------------\n\n";
+        fout<<"Game number: " <<game_num <<setw(15) << "Money left: $" <<you.get_money()<<std::endl
+        <<"Bet: " <<bet<< std::endl;
+        
+        fout<<"Your cards:" << std::endl;
+        for(int i=0; i< your_h.get_size(); ++i){
+            fout<<setw(10)<<your_h.get_spanish_rank(i) <<" de " <<your_h.get_spanish_suit(i)<< "  (" << your_h.get_english_rank(i)<<" of " << your_h.get_english_suit(i) <<")\n";
+        }
+        
         
         
     }
@@ -369,7 +366,7 @@ int main() {
     else
         std::cout<<"You have beaten the game!\n";
     
-    fout<<game_num;
+    fout<<"-----------------------------------------------\n";
     fout.close();
     
     return 0;
