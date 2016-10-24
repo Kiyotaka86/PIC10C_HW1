@@ -1,5 +1,8 @@
 Copyright: public.
 PIC10C_HW1
+
+URL: https://github.com/Kiyotaka86/PIC10C_HW1/
+
 2016/10
 Created by Kiyotaka Kokubun <kioooo.fm@gmail.com>
 
