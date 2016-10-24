@@ -260,9 +260,9 @@ int main() {
     int bet=0;
     Player you(100);
    
-    int game_num=0;
+    int game_num=0;  //it's back to 0 now!
     
-    std::ofstream fout;
+    std::ofstream fout;  //ifstream is now ofstream
     fout.open("gamelog.txt");
     
 //Player's turn
